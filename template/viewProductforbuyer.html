@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends "buyerbase.html" %}
+    {% block content %}
+
+    <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">View product for buyer </h5>
+
+          <!-- Dark Table -->
+          <table class="table table-dark">
+            <thead>
+              <tr>
+                <th scope="col">Product_name</th>
+                <th scope="col">Image</th>
+                <th scope="col">Details</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Category</th>
+                <th scope="col">Add</th>
+
+              </tr>
+            </thead>
+            <tbody>
+                {% for view in viewproduct %}
+                <tr>
+                    <td>{{view.Name}}</td>
+                    <td><img src="{{view.ImageFile.url}}" height="10%" width="10%"></td>
+                    <td>{{view.Details}}</td>
+                    <td>{{view.Stock}}</td>
+                    
+                    <td>{{view.Category.Category}}</td>
+                    <td><a href="{% url 'addtoCart' view.id%}">Add to cart</a></td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+          <!-- End Dark Table -->
+
+        </div>
+      </div>
+
+    {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View product for buyer</title>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th>Product_name</th>
+            <th>Image</th>
+            <th>Details</th>
+            <th>Stock</th>
+            <th>Category</th>
+            <th>Add</th>
+        </tr>
+        {% for view in viewproduct %}
+        <tr>
+            <td>{{view.Name}}</td>
+            <td><img src="{{view.ImageFile.url}}" height="10%" width="10%"></td>
+            <td>{{view.Details}}</td>
+            <td>{{view.Stock}}</td>
+            
+            <td>{{view.Category.Category}}</td>
+            <td><a href="{% url 'addtoCart' view.id%}">Add to cart</a></td>
+            
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

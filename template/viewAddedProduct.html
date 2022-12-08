@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends "sellerbase.html" %}
+    {% block content %}
+    <div class="pagetitle">
+        <h1>View Added Product</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+        </nav>
+      </div>
+    
+      <section class="section dashboard">
+        <div class="row">
+    <table class="table">
+        <thead>
+          <tr>
+            
+            <th scope="col">Product_Name</th>
+            <th scope="col">ImageFile</th>
+            <th scope="col">Details</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Category_id</th>
+            <th scope="col">Price</th>
+            <th scope="col">Action</th>
+
+
+          </tr>
+        </thead>
+        <tbody>
+            {% for v in products %}
+        <tr>
+            
+            
+            <td>{{v.Name}}</td>
+            <td><img src='{{v.ImageFile.url}}' height="10%" width="10%"></td>
+            <td>{{v.Details}}</td>
+            <td>{{v.Stock}}</td>
+            <td>{{v.Category.Category}}</td>
+            <td>{{v.Price}}</td>
+            <td><a href="{% url 'deleteProduct' v.id%}">Delete</a>
+                <a href="{% url 'editProduct' v.id%}">Edit </a></td>
+            
+            
+        </tr>
+        {% endfor %}
+   
+
+        </tbody>
+        
+      </table>
+
+    {% endblock %}
+<!-- <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View seller added product</title>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th>Product_Name</th>
+            <th>ImageFile</th>
+            <th>Details</th>
+            <th>Stock</th>
+            <th>Category_id</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        
+        {% for v in products %}
+        <tr>
+            
+            
+            <td>{{v.Name}}</td>
+            <td><img src='{{v.ImageFile.url}}' height="10%" width="10%"></td>
+            <td>{{v.Details}}</td>
+            <td>{{v.Stock}}</td>
+            <td>{{v.Category.Category}}</td>
+            <td>{{v.Price}}</td>
+            <td><a href="{% url 'deleteProduct' v.id%}">Delete</a>
+                <a href="{% url 'editProduct' v.id%}">Edit </a></td>
+            
+            
+        </tr>
+        {% endfor %}
+   
+    </table> -->
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends "buyerbase.html" %}
+    {% block content %}
+    <form method="POST" action="{% url 'placeOrder' %}">
+        {%csrf_token%}
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cart </h5>
+    
+              <!-- Dark Table -->
+              <table class="table table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col">Product_name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Shipping Address</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total_Price</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Place order</th>
+
+    
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for v in view %}
+                    <tr>
+                        
+                        <td>{{v.Product.Name}}</td>
+                        <td><img src="{{v.Product.ImageFile.url}}" height="20%" width="20%"></td>
+                        <td>{{v.Shipping}}</td>
+                        <td>{{v.Phone}}</td>
+                        <td>{{v.Quantity}}</td>
+                        <td>{{v.Total_price}}</td>
+                        <td><a href="{% url 'cartDeleteProduct' v.id %}">Delete</a></td>
+                        <td><input type="checkbox"  name="checkbox" value="{{v.id}}">Place order</td>
+                    </tr>
+                    {%endfor%}
+                </table>
+                <input type="submit" name="submit" value="submit">
+                </form>
+    {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+</head>
+<body>
+    <form method="POST" action="{% url 'placeOrder' %}">
+        {%csrf_token%}
+    <table border="1">
+        <tr>
+            <th>Product_name</th>
+            <th>Image</th>
+            <th>Shipping Address</th>
+            <th>Phone</th>
+            <th>Quantity</th>
+            <th>Total_Price</th>
+            <th>Action</th>
+            <th>Order Place</th>
+        </tr>
+        {% for v in view %}
+        <tr>
+            
+            <td>{{v.Product.Name}}</td>
+            <td><img src="{{v.Product.ImageFile.url}}" height="20%" width="20%"></td>
+            <td>{{v.Shipping}}</td>
+            <td>{{v.Phone}}</td>
+            <td>{{v.Quantity}}</td>
+            <td>{{v.Total_price}}</td>
+            <td><a href="{% url 'cartDeleteProduct' v.id %}">Delete</a></td>
+            <td><input type="checkbox"  name="checkbox" value="{{v.id}}">Place order</td>
+        </tr>
+        {%endfor%}
+    </table>
+    <input type="submit" name="submit" value="submit">
+    </form>
+</body>
+{%if messages %}
+{%for msg in messages%}
+<script>
+    alert('{{msg}}')
+</script>
+{%endfor%}
+{%endif%}
+</html>

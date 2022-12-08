@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+    {%extends "adminbase.html" %}
+    {% block content %}
+    <!-- <script type="text/javascript"> -->
+        <script src="/static/jquery-1.8.3.min.js"></script>
+        <script>
+            $("document").ready(function(){
+               $("#Username").change(function(){
+                   var regname=$("#Username").val();
+                   $.ajax({
+                       url:"{% url 'checkUserName' %}",
+                       data:{'name':regname},
+                       success:function(data){
+                           $("#Username").html(data)
+                           if(data.valid=="exist"){
+                               alert("User already exist")
+                               $("#Username").val()
+                           }
+                       }
+                   })
+                })
+            })
+           
+  </script> 
+<script type="text/javascript">    
+function validation()
+    {
+        
+        var alpha=/^[a-zA-Z]+$/;
+	      var num=/^[0-9]+$/;
+
+        var name=document.getElementById('Name');
+       
+        var address=document.getElementById('Address');
+        var dob=document.getElementById('Dob');
+        var country=document.getElementById('Country');
+        var phone=document.getElementById('Phone');
+        var username=document.getElementById('Username');
+        var password=document.getElementById('Password');
+        
+        var gender=document.myform.Gender;
+
+        if(Name.value.length==0){
+            alert("Enter a name")
+            return false;
+        }
+        else if(!Name.value.match(alpha))
+        {
+            alert("Enter a valid name")
+            Name.focus();
+            return false;
+        }
+	
+    else if(Address.value.length==0){
+            alert("Enter address");
+            return false;
+        }
+       
+        
+        else if(Dob.value.length==0){
+            alert("Enter a DOB");
+            return false;
+        }
+        
+        else if(Phone.value.length==0){
+            alert("Enter phone number");
+            return false;
+        }
+        else if(!Phone.value.match(num)){
+            alert("enter a valid number");
+            Phone.focus();
+            return false;
+        }
+       
+        else if(Username.value.length==0){
+            alert("Enter a username");
+            return false;
+        }
+        else if(Country.value.length==0){
+            alert("Enter a country");
+            return false;
+        }
+        else if(Password.value.length==0){
+            alert("Enter a password");
+            return false;
+        }
+        
+        else if(gender[0].checked==false && gender[1].checked==false)
+	      {
+		        alert('enter a valid gender');
+		          return false;
+	      }
+        else{
+            return true;
+        }
+
+    }
+</script> 
+     <!-- </script> -->
+     <!-- <script src="/static/jquery-1.8.3.min.js"></script>
+     <script>
+         $("document").ready(function(){
+            $("#Username").change(function(){
+                var regname=$("#Username").val();
+                $.ajax({
+                    url:"{% url 'checkUserName' %}",
+                    data:{'name':regname},
+                    success:function(data){
+                        $("#Username").html(data)
+                        if(data.valid=="exist"){
+                            alert("User already exist")
+                            $("#Username").val()
+                        }
+                    }
+                })
+             })
+         })
+        
+     </script> -->
+
+<div class="pagetitle">
+    <h1>Buyer Registration</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section dashboard">
+    <div class="row">
+<form method="POST" action="{% url 'buyerRegistrationAction' %}" name="myform" >
+    
+    {%csrf_token%}
+        <div class="row mb-3">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="name" id="Name">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="Address" class="col-sm-2 col-form-label">Address</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" name="Address" id="Address"></textarea>
+          </div>
+        </div>
+        <div class="row mb-3">
+            <label for="dob" class="col-sm-2 col-form-label">DOB</label>
+            <div class="col-sm-10">
+              <input type="date" class="form-control" name='DOB' id="Dob">
+            </div>
+          </div>
+        <!-- </div> -->
+        <div class="row mb-3">
+            <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name='phone' id="Phone">
+            </div>
+          </div>
+        
+        <div class="row mb-3">
+            <label for="username" class="col-sm-2 col-form-label">Username</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name='username' id="Username">
+            </div>
+          </div>
+        
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Country</label>
+            <div class="col-sm-10">
+              <select class="form-select" aria-label="Default select example" name='Country' id="Country">
+                <option value="">--select--</option>
+                <option value="India">India</option>
+                <option value="America">America</option>
+                <option value="Pakistan">Pakistan</option>
+                <option value="China">China</option>
+                <option value="Japan">Japan</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="Password" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control"  name='password' id="Password">
+            </div>
+          </div>
+        <div> 
+       <p> Gender
+        Male
+        <input type="radio" name="Gender" value="male">
+        Female
+        <input type="radio" name="Gender" value="female"></p>  
+       </div>
+       
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary" onclick="return validation()">Submit</button>
+          <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
+      </form><!-- End Horizontal Form -->
+      {%if messages %}
+{%for msg in messages%}
+<script>
+    alert('{{msg}}')
+</script>
+{%endfor%}
+{%endif%}
+</html>
+      {%endblock%}
+<!-- <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Registration</title>
+</head>
+<script type="text/javascript">
+
+    function validation()
+    {
+        
+        var alpha=/^[a-zA-Z]+$/;
+	var num=/^[0-9]+$/;
+
+        var name=document.getElementById('Name');
+        var gender=document.myform.Gender;
+        var address=document.getElementById('Address');
+        var dob=document.getElementById('Dob');
+        var country=document.getElementById('Country');
+        var phone=document.getElementById('Phone');
+        var username=document.getElementById('Username');
+        var password=document.getElementById('Password');
+
+        if(name.value.length==0){
+            alert("Enter a name")
+            return false;
+        }
+        else if(!name.value.match(alpha))
+        {
+            alert("Enter a valid name")
+            Name.focus();
+            return false;
+        }
+	else if(Gender[0].checked==false && Gender[1].checked==false)
+	{
+		alert('enter a valid gender');
+		return false;
+	}
+    else if(Address.value.length==0){
+            alert("Enter address");
+            return false;
+        }
+       
+        
+        else if(Dob.value.length==0){
+            alert("Enter a DOB");
+            return false;
+        }
+        else if(Country.value.length==0){
+            alert("Enter a country");
+            return false;
+        }
+        else if(Phone.value.length==0){
+            alert("Enter phone number");
+            return false;
+        }
+        else if(!Phone.value.match(num)){
+            alert("enter a valid number");
+            Phone.focus();
+            return false;
+        }
+       
+        else if(Username.value.length==0){
+            alert("Enter a username");
+            return false;
+        }
+        else if(Password.value.length==0){
+            alert("Enter a password");
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    } 
+ </script>
+ <script src="/static/jquery-1.8.3.min.js"></script>
+ <script>
+     $("document").ready(function(){
+        $("#Username").change(function(){
+            var regname=$("#Username").val();
+            $.ajax({
+                url:"{% url 'checkUserName' %}",
+                data:{'name':regname},
+                success:function(data){
+                    $("#Username").html(data)
+                    if(data.valid=="exist"){
+                        alert("User already exist")
+                        $("#Username").val()
+                    }
+                }
+            })
+         })
+     })
+    
+ </script>
+<body>
+    <h3>Buyer Registration</h3>
+    <form method="POST" action="{% url 'buyerRegistrationAction' %}" name="myform" >
+        {%csrf_token%}
+        Name:
+        <input type="text" name="Name" id="Name"><br>
+       <p> Gender:
+        Male
+        <input type="radio" name="Gender"  id="Gender" value="male">
+        Female
+        <input type="radio" name="Gender" id="Gender" value="female"></p>
+        <p>Address:
+        <textarea name="Address" cols="4" rows="6" id="Address"></textarea></p>
+        <p>DOB:
+        <input type="date" name='DOB' id="Dob"></p>
+        <p>Country:
+        <select name='Country' id="Country">
+            <option value="">--select--</option>
+            <option value="India">India</option>
+            <option value="America">America</option>
+            <option value="Pakistan">Pakistan</option>
+            <option value="China">China</option>
+            <option value="Japan">Japan</option>
+        </select>
+        </p>
+        <p>Phone Number:
+        <input type="text" name='Phone' id='Phone'></p>
+        <p>Username:
+        <input type="text" name='Username' id="Username"></p>
+        <p>Password:
+        <input type="Password" name='Password' id="Password"></p>
+        <input type="submit" value="submit"  name='submit' onclick="return validation()">
+    </form>
+</body> -->

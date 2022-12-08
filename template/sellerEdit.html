@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends "sellerbase.html" %}
+    {% block content %}
+    {%for edit in editSeller %}
+    <form method="POST" action="{%url 'sellerEditAction' %}" name="myform" enctype="multipart/form-data">
+        {%csrf_token%}
+        <input type="hidden" name='id' >
+        <div class="row mb-3">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="name" id="Name" value="{{edit.Name}}">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="Address" class="col-sm-2 col-form-label">Address</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" name="Address" id="Address">{{edit.Address}}</textarea>
+            </div>
+          </div>
+          <div class="row mb-3">
+              <label for="dob" class="col-sm-2 col-form-label">DOB</label>
+              <div class="col-sm-10">
+                <input type="date" class="form-control" name='DOB' id="Dob" value="{{edit.DOB}}">
+              </div>
+            </div>
+          <!-- </div> -->
+          <div class="row mb-3">
+              <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control"  name='phone' id="Phone" value='{{edit.Phone}}'>
+              </div>
+            </div>
+          
+          <div class="row mb-3">
+              <label for="username" class="col-sm-2 col-form-label">Username</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control"  name='username' id="Username" value='{{edit.Username}}'>
+              </div>
+            </div>
+          
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">Country</label>
+              <div class="col-sm-10">
+                <select class="form-select" aria-label="Default select example" name='country' id="Country" value="{{edit.Country}}">
+                  <option value="">--select--</option>
+                  <option value="India">India</option>
+                  <option value="America">America</option>
+                  <option value="Pakistan">Pakistan</option>
+                  <option value="China">China</option>
+                  <option value="Japan">Japan</option>
+                </select>
+              </div>
+            </div>
+          </div>
+            <div class="row mb-3">
+              <label for="Password" class="col-sm-2 col-form-label">Password</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control"  name='password' id="Password" value='{{edit.Password}}'>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="Image" class="col-sm-2 col-form-label">Image</label>
+              <div class="col-sm-10">
+                <img src='{{edit.ImageFile.url}}' height="30%" width="50%">
+        <input type="file" name="file" id="file" value="{{edit.ImageFile}}">
+              </div>
+            </div>
+            
+          <fieldset class="row mb-3">
+            <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
+            <div class="col-sm-10">
+              <div class="form-check">
+                
+                {%if edit.Gender == 'male' %}
+                Male
+                <input type="radio" name="gender" id="Gender" value="male" checked='true'>
+                Female
+                <input type="radio" name="gender" id="Gender" value="female" ></p>
+                {% else  %}
+                Male
+                <input type="radio" name="gender" id="Gender" value="male" >
+                Female
+                <input type="radio" name="gender" id="Gender" value="female" checked='true'></p>
+                {%endif%}
+              
+
+              
+            </div>
+          </fieldset>
+         
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary" onclick="return validation()">Submit</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+          </div>
+        </form><!-- End Horizontal Form -->
+        {%endfor%}
+    {%endblock%}
+<!-- <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit page seller</title>
+</head>
+<body>
+    {%for edit in editSeller %}
+    <form method="POST" action="{%url 'sellerEditAction' %}" name="myform" enctype="multipart/form-data">
+        {%csrf_token%}
+        <input type="hidden" name='id' >
+        Name:
+        <input type="text" name="name" id="Name" value="{{edit.Name}}"><br>
+       <p> Gender:
+        {%if edit.Gender == 'male' %}
+        Male
+        <input type="radio" name="gender" id="Gender" value="male" checked='true'>
+        Female
+        <input type="radio" name="gender" id="Gender" value="female" ></p>
+        {% else  %}
+        Male
+        <input type="radio" name="gender" id="Gender" value="male" >
+        Female
+        <input type="radio" name="gender" id="Gender" value="female" checked='true'></p>
+        {%endif%}
+        <p>Address:
+        <textarea name="Address" id="Address" cols="10" rows="3" >{{edit.Address}}</textarea></p>
+        <p>DOB:
+            <input type="date" name='DOB' id="Dob" value="{{edit.DOB}}"></p>
+        <p>Country
+            <select name='country' id="Country" value="{{edit.Country}}">
+                <option value="{{edit.Country}}">{{edit.Country}}</option>
+                <!-- <option value="India">India</option> -->
+                <option value="America">America</option>
+                <option value="Pakistan">Pakistan</option>
+                <option value="China">China</option>
+                <option value="Japan">Japan</option>
+            </select>
+        </p>
+        <p>Phone Number:
+        <input type="text" name='phone' id="Phone" value='{{edit.Phone}}'></p>
+        <p>Username:
+        <input type="text" name='username' id="Username" value='{{edit.Username}}'></p>
+        <p>Password:
+        <input type="Password" name='password' id="Password" value='{{edit.Password}}'></p>
+        <p>ImageUrl:
+            <img src='{{edit.ImageFile.url}}' height="10%" width="10%">
+        <input type="file" name="file" id="file" value="{{edit.ImageFile}}"></p>
+        
+        <input type="submit" name="submit" value="Submit" >
+    </form> 
+{% endfor %}
+
+</body> -->
+</html>

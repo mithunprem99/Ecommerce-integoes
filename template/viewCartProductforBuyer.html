@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends "buyerbase.html" %}
+    {%block content %}
+    <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">View Cart</h5>
+
+          <!-- Table with hoverable rows -->
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Product_Name</th>
+                <th scope="col">Image</th>
+                <th scope="col">Seller_Name</th>
+                <th scope="col">Time</th>
+                <th scope="col">Address</th>
+
+                <th scope="col">Phone</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total_Price</th>
+
+                <th scope="col" colspan="2"> Status</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for v in view %}
+                <tr>
+                <td>{{v.Product.Name}}</td>
+                <td><img src="{{v.Product.ImageFile.url}}" height="100%" width="100%"></td>
+                <td>{{v.Seller.Name}}</td>
+                <td>{{v.Date}}</td>
+                <td>{{v.Time}}</td>
+                <td>{{v.Shipping}}</td>
+                <td>{{v.Phone}}</td>
+                <td>{{v.Quantity}}</td>
+                <td>{{v.Total_price}}</td>
+                <td>{{v.Status}}</td>
+                {%if v.Status == "pending" %}
+                <td><a href="{% url 'OrderCancel' v.id %}">Cancel order</a></td>
+                {%endif%}
+                {%if v.Status == "Approved" %}
+                <td><a href="{% url 'showTrackingDetails' v.id%}">Show Tracking Details</a></td>
+                {% endif%}
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+          <!-- End Table with hoverable rows -->
+
+        </div>
+      </div>
+    {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>viewCartProductforBuyer</title>
+</head>
+<body>
+    <form method="POST" action="">
+        {%csrf_token%}
+        <table border="1">
+            <tr>
+            <th>Product_Name</th>
+            <th>Image</th>
+            <th>Seller_Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Quantity</th>
+            <th>Total_Price</th>
+            <th colspan="2"> Status</th>
+            </tr>
+            {% for v in view %}
+            <tr>
+            <td>{{v.Product.Name}}</td>
+            <td><img src="{{v.Product.ImageFile.url}}" height="20%" width="20%"></td>
+            <td>{{v.Seller.Name}}</td>
+            <td>{{v.Date}}</td>
+            <td>{{v.Time}}</td>
+            <td>{{v.Shipping}}</td>
+            <td>{{v.Phone}}</td>
+            <td>{{v.Quantity}}</td>
+            <td>{{v.Total_price}}</td>
+            <td>{{v.Status}}</td>
+            {%if v.Status == "pending" %}
+            <td><a href="{% url 'OrderCancel' v.id %}">Cancel order</a></td>
+            {%endif%}
+            {%if v.Status == "Approved" %}
+            <td><a href="{% url 'showTrackingDetails' v.id%}">Show Tracking Details</a></td>
+            {% endif%}
+            </tr>
+            {% endfor %}
+            
+        </table>
+
+    </form>
+</body>
+</html>

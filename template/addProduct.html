@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends "sellerbase.html" %}
+    {%block content %}
+    <script type="text/javascript">
+
+        function validation(){
+            var product=document.getElementById('Product');
+            var img=document.getElementById('Image');
+            var details=document.getElementById('Details');
+            var stock=document.getElementById('Stock');
+            var category=document.getElementById('Category');
+            var price=document.getElementById('Price');
+            
+    
+            if (product.value.length==0){
+                alert("Enter the product name");
+                return false;
+            }
+            else if(img.value.length==0){
+                alert("Choose an image file");
+                return false;
+            }
+            else if(details.value.length==0){
+                alert("Enter Product details");
+                return false;
+            }
+            else if (stock.value.length==0){
+                alert("Enter the stock value");
+                return false;
+    
+            }
+            else if(category.value.length==0){
+                alert("select the category")
+                return false;
+            }
+            else if(price.value.length==0){
+                alert("Enter price");
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    
+    </script>
+<div class="pagetitle">
+    <h1>Add product</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section dashboard">
+    <div class="row">
+<form method="POST" action="{%url 'addProductAction' %}" enctype="multipart/form-data">
+    {%csrf_token%}
+    <div class="row mb-3">
+        <label for="product_name" class="col-sm-2 col-form-label">Product_Name</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="name" id="Product">
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="image" class="col-sm-2 col-form-label">Image</label>
+        <div class="col-sm-10">
+          <input type="file" class="form-control" name="file" id="Image">
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="details" class="col-sm-2 col-form-label">Details</label>
+        <div class="col-sm-10">
+            <textarea name="details"  class="form-control" id="Details"></textarea>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="stock" class="col-sm-2 col-form-label">Stock</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control"  name="stock" id="Stock" >
+        </div>
+      </div>
+      
+      <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">Select</label>
+        <div class="col-sm-10">
+          <select class="form-select" aria-label="Default select example" name="category" id="Category">
+            <option value="">--Select--</option>
+            {%for c in category%}
+            <option value="{{c.id}}" >{{c.Category}}</option>
+                {%endfor%}
+                </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="price" class="col-sm-2 col-form-label">Price</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control"  name=price id="Price">
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary" onclick="return validation()">Submit</button>
+        <button type="reset" class="btn btn-secondary">Reset</button>
+      </div>
+    </form><!-- End Horizontal Form -->
+    {%endblock%}
+<!-- <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add product Page</title>
+</head>
+<script type="text/javascript">
+
+    function validation(){
+        var product=document.getElementById('Product');
+        var img=document.getElementById('Image');
+        var details=document.getElementById('Details');
+        var stock=document.getElementById('Stock');
+        var category=document.getElementById('Category');
+        var price=document.getElementById('Price');
+        
+
+        if (product.value.length==0){
+            alert("Enter the product name");
+            return false;
+        }
+        else if(img.value.length==0){
+            alert("Choose an image file");
+            return false;
+        }
+        else if(details.value.length==0){
+            alert("Enter Product details");
+            return false;
+        }
+        else if (stock.value.length==0){
+            alert("Enter the stock value");
+            return false;
+
+        }
+        else if(category.value.length==0){
+            alert("select the category")
+            return false;
+        }
+        else if(price.value.length==0){
+            alert("Enter price");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+</script>
+<body>
+    
+    <table>
+        <form method="POST" action="{%url 'addProductAction' %}" enctype="multipart/form-data">
+            {%csrf_token%}
+        <tr>
+            <td>Product_Name:</td>
+            <td><input type="text" name="name" id="Product"></td>
+        </tr>
+        <tr>
+            <td>Image</td>
+            <td><input type="file" name="file" id="Image"></td>
+        </tr>
+        <tr>
+            <td>
+                Details:
+            </td>
+            <td><textarea name="details"  cols="30" rows="10" id="Details"></textarea></td>
+        </tr>
+        <tr>
+            <td>Stock:</td>
+            <td><input type="text" name="stock" id="Stock" id="Stock"></td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td>
+                <select name="category" id="Category">
+                    <option value="">--Select--</option>
+                {%for c in category%}}
+                <option value="{{c.id}}" >{{c.Category}}</option>
+                {%endfor%}
+                </select>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>Price:</td>
+            <td><input type="text" name=price id="Price"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"  onclick="return validation()"></td>
+        </tr>
+
+    </form>
+    </table>   -->
+  
+</body>
+</html>

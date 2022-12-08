@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends "sellerbase.html" %}
+    
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Home</title>
+</head>
+<body>
+    <h2><a href="{% url 'sellerEdit' %}">Edit profile</a></h2>
+    <h2><a href="{%url 'addProduct' %}">Add Product</a></h2>
+    <h2><a href="{% url 'viewAddedProductAction' %}">View Product</a></h2>
+    <h2><a href="{% url 'viewOrders' %}">Orders</a></h2>
+    <h2><a href="{%url 'logout' %}">Logout</a></h2>
+</body>
+
+{%if messages %}
+{%for msg in messages%}
+<script>
+    alert('{{msg}}')
+</script>
+{%endfor%}
+{%endif%}
+
+</html>

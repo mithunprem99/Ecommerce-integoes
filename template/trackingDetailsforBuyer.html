@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- {% extends sellerbase.html" %}
+    {% block content %}
+
+    {%end block%} -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking Details For Buyer</title>
+</head>
+<body>
+    <form method="POST" action="">
+        <table border="1">
+            <tr>
+            
+            <th>Date</th>
+            <th>Time</th>
+            <th>Details</th>
+            </tr>
+            {%for v in views %}
+            <tr>
+                
+                <td>{{v.Date}}</td>
+                <td>{{v.Time}}</td>
+                <td>{{v.Details}}</td>
+
+
+
+            </tr>
+            {%endfor%}
+        </table>
+    </form>
+</body>
+</html>

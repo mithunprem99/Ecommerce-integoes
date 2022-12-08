@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<script type="text/javascript">
+    function validation(){
+        var username=document.getElementById("Username");
+        var password=document.getElementById("Password");
+
+        if(username.value.length==0){
+            alert("Enter username");
+            return false;
+        }
+        else if(password.value.length==0){
+            alert("Enter the password");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+</script>
+<body>
+    <form method="POST" action="{%url 'loginAction' %}">
+        {%csrf_token%}
+        <p>USERNAME</p>
+        <input type="text" name="username" id="Username">
+        <p>PASSWORD</p>
+        <input type="password" name="password" id="Password"><br>
+       <p> <input type="submit" value="submit" onclick="return validation()"></p>
+        <h3><a href="{%url 'forgotPassword' %}">Forgot password</a></h3>
+    </form>
+</body>
+{%if messages %}
+{%for msg in messages%}
+<script>
+    alert('{{msg}}')
+</script>
+{%endfor%}
+{%endif%}
+</html>

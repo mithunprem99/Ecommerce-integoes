@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends "buyerbase.html" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Home</title>
+</head>
+<body>
+    <h3><a href="{% url 'buyerEdit'%}">Edit profile</a></h3>
+    <h3><a href="{%url 'viewProductforbuyer' %}">View Products</a></h3>
+    <h3><a href="{%url 'viewCartProduct' %}">View cart</a></h3>
+    <h3><a href="{% url 'viewCartProductforBuyer' %}">Orders</a></h3>
+    <h3><a href="{% url 'searchProduct' %}">Search Product</a></h3>
+    <h3><a href="{% url 'searchByCategory' %}">Search Category</a></h3>
+    <h3><a href="{%url 'logout' %}">Logout</a></h3>
+</body>
+</html>

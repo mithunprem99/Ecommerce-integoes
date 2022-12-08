@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends "buyerbase.html" %}
+
+    {%block content %}
+    <script type="text/javascript">
+        function validation(){
+        var num=/^[0-9]+$/;
+    
+            var buyer_name=document.getElementById('Buyer');
+            var address=document.getElementById('Address');
+            var phone=document.getElementById('Phone');
+            var quantity=document.getElementById('quantity');
+    
+            if (buyer_name.value.length==0){
+                alert("Enter buyer name");
+                return false;
+            }
+            else if(address.value.length==0){
+                alert("Enter your address");
+                return false;
+            }
+            else if(phone.value.length==0){
+                alert("Enter the phno number");
+                return false;
+            }
+            else if(!phone.value.match(num)){
+                alert("Enter a valid number");
+                phone.focus()
+                return false;
+            }
+            else if(quantity.value.length==0){
+                alert("Enter the quantity");
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    </script>
+    <script src="/static/jquery-1.8.3.min.js"></script>
+    <script>
+        $("#document").ready(function(){
+            $("#quantity").change(function(){
+                var price=parseInt($("#price").val())
+                var quantity=parseInt($("#quantity").val())
+                var total_price=price*quantity
+                $("#total_price").val(total_price)
+             
+            })
+        })
+    </script>
+
+{% for v in view %}
+    <form method="POST" action="{%url 'cartView'  %}">
+        {%csrf_token%}
+        <input type="hidden" name="id"  value="{{v.id}}">
+
+        <div class="row mb-3">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Product_Name</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name='name' value="{{v.Name}}" readonly >
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="image" class="col-sm-2 col-form-label">Image</label>
+            <div class="col-sm-10">
+              <!-- <input type="file" class="form-control" name="file"  >!--><img src="{{v.ImageFile.url}}" width="20%" height="50%" readonly>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="image" class="col-sm-2 col-form-label">Details</label>
+            <div class="col-sm-10">
+              <input type="text" name='details' value="{{v.Details}}" readonly class="form-control"   >
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="image" class="col-sm-2 col-form-label">Buyer_Name</label>
+            <div class="col-sm-10">
+              <input type="text" name='buyer' id="Buyer" class="form-control" >
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Shipping_Address</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" style="height: 100px" name="address" id="Address"></textarea>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="image" class="col-sm-2 col-form-label">Phone_Number</label>
+            <div class="col-sm-10">
+              <input type="text" name="phone" id="Phone" class="form-control" >
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="image" class="col-sm-2 col-form-label">Stock</label>
+            <div class="col-sm-10">
+              <input type="text" name='stock' value="{{v.Stock}}" readonly class="form-control" >
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="image" class="col-sm-2 col-form-label">Quantity</label>
+            <div class="col-sm-10">
+              <input type="text" name="quantity" id="quantity" class="form-control" >
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="image" class="col-sm-2 col-form-label">Total_price</label>
+            <div class="col-sm-10">
+              <input type="text"name='total' readonly='true' id="total_price" class="form-control" >
+            </div>
+          </div>
+          <input type="hidden" name="price" value="{{v.Price}}"  id="price" readonly>
+
+          <input type="submit" name="submit" value="Submit" onclick="return validation()"> 
+          </form>
+          {%endfor%}
+
+    {%endblock%}
+<!-- <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+</head>
+<script type="text/javascript">
+    function validation(){
+	var num=/^[0-9]+$/;
+
+        var buyer_name=document.getElementById('Buyer');
+        var address=document.getElementById('Address');
+        var phone=document.getElementById('Phone');
+        var quantity=document.getElementById('quantity');
+
+        if (buyer_name.value.length==0){
+            alert("Enter buyer name");
+            return false;
+        }
+        else if(address.value.length==0){
+            alert("Enter your address");
+            return false;
+        }
+        else if(phone.value.length==0){
+            alert("Enter the phno number");
+            return false;
+        }
+        else if(!phone.value.match(num)){
+            alert("Enter a valid number");
+            phone.focus()
+            return false;
+        }
+        else if(quantity.value.length==0){
+            alert("Enter the quantity");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+</script>
+<script src="/static/jquery-1.8.3.min.js"></script>
+<script>
+    $("#document").ready(function(){
+        $("#quantity").change(function(){
+            var price=parseInt($("#price").val())
+            var quantity=parseInt($("#quantity").val())
+            var total_price=price*quantity
+            $("#total_price").val(total_price)
+         
+        })
+    })
+</script>
+<body>
+    {% for v in view %}
+    <form method="POST" action="{%url 'cartView'  %}">
+        {%csrf_token%}
+        <table>
+            <input type="hidden" name="id"  value="{{v.id}}">
+            <tr>
+                <th>Product_Name</th>
+                <td><input type="text" name='name' value="{{v.Name}}" readonly></td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{v.ImageFile.url}}" width="20%" height="20%" readonly></td>
+            </tr>
+            <tr>
+                <th>Details</th>
+                <td><input type="text" name='details' value="{{v.Details}}" readonly></td>
+            </tr>
+            <tr>
+                <th>Buyer Name</th>
+                <td><input type="text" name='buyer' id="Buyer"></td>
+            </tr>
+            <tr>
+                <th>Shipping Address</th>
+                <td><textarea name="address"  cols="30" rows="10" id="Address"></textarea></td>
+            </tr>
+            <tr>
+                <th>Phone number</th>
+                <td><input type="text" name="phone" id="Phone"></td>
+            </tr>
+            <tr>
+                <th>
+                    Stock
+                </th>
+                <td><input type="text" name='stock' value="{{v.Stock}}" readonly></td>
+
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td><input type="text" name="quantity" id="quantity" ></td>
+            </tr>
+            <tr>
+                <th>Total price</th>
+                <td><input type="text" name='total' readonly='true' id="total_price"></td>
+            </tr>
+            <tr>
+               
+                <td><input type="hidden" name="price" value="{{v.Price}}"  id="price" readonly></td>
+            </tr>
+           
+
+            <tr>
+                <td>
+                    <input type="submit" name="submit" value="Submit" onclick="return validation()"> 
+                </td>
+            </tr>
+           
+        </table>
+    </form>
+    {%endfor%}
+</body> -->
+<!-- {%if messages %}
+{%for msg in messages%}
+<script>
+    alert('{{msg}}')
+</script>
+{%endfor%}
+{%endif%} -->
+</html>

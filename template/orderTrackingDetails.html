@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends "sellerbase.html" %}
+    {% block content %}
+    <script type="text/javascript">
+        function validation(){
+            var details=document.getElementById("Details")
+    
+            if(details.value.length==0){
+                alert("Enter the details");
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    </script>
+    <form method="POST" action="{%url 'trackingDetailsAction' %}">
+        {%csrf_token%}
+        {% for v in view %}
+        <input type="hidden" name="id" value="{{v.id}}">
+    <div class="row mb-3">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Add Tracking Details</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" style="height: 100px" name="details"></textarea>
+        </div>
+      </div>    
+      <input type="submit"  name="submit" value="submit" onclick="return validation()">
+      {%endfor%}
+</form>
+    {%endblock%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>trackingDetails</title>
+</head>
+<script type="text/javascript">
+    function validation(){
+        var details=document.getElementById("Details")
+
+        if(details.value.length==0){
+            alert("Enter the details");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+</script>
+
+<body>
+    <h2>Add Tracking Details</h2>
+    <form method="POST" action="{%url 'trackingDetailsAction' %}">
+        {%csrf_token%}
+        <table>
+            {% for v in view %}
+            <tr>
+                <input type="hidden" name="id" value="{{v.id}}">
+                <th>Details</th>
+                <td><textarea name="details" cols="15" rows="10"></textarea></td>
+            </tr>
+            <tr>
+                <td><input type="submit"  name="submit" value="submit" onclick="return validation()"></td>
+            </tr>
+            {%endfor%}
+        </table>
+    </form>
+
+</body>
+</html>

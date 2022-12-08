@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends "adminbase.html" %}
+    {% block content %}
+    
+    <body>
+        <form method="POST" action="{% url 'categoryTableAction' %}">
+            {%csrf_token%}
+            <p>Name</p>
+            <input type="text" name='name' id="Name">
+            <input type="submit" name="submit" value="submit" onclick="return validation()">
+        </form>
+    
+        
+    </body>
+     {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CategoryTable</title>
+</head>
+<script type="text/javascript">
+    function validation(){
+        var name=document.getElementById("Name");
+
+        if(name.value.length==0){
+            alert("Enter the category");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+</script>
+<body>
+    <form method="POST" action="{% url 'categoryTableAction' %}">
+        {%csrf_token%}
+        <p>Name</p>
+        <input type="text" name='name' id="Name">
+        <input type="submit" name="submit" value="submit" onclick="return validation()">
+    </form>
+
+    
+</body>
+{%if messages %}
+{%for msg in messages%}
+<script>
+    alert('{{msg}}')
+</script>
+{%endfor%}
+{%endif%}
+</html>

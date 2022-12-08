@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends "sellerbase.html" %}
+    {%block content %}
+    {% for product in products %}
+    <form method="POST" action="{% url 'editProductAction' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{product.id}}">
+
+        <div class="row mb-3">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Product_Name</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="name" value="{{product.Name}}" >
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="image" class="col-sm-2 col-form-label">Image</label>
+            <div class="col-sm-10">
+              <input type="file" class="form-control" name="file"  ><img src="{{product.ImageFile.url}}" height="50%" width="30%"></td>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Details</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" style="height: 100px" name="details">{{product.Details}}</textarea>
+            </div>
+          </div> 
+          <div class="row mb-3">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Stock</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="stock" value="{{product.Stock}}"  >
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Select</label>
+            <div class="col-sm-10">
+              <select class="form-select" aria-label="Default select example" name="category">
+                <option value="">--Select--</option>
+                    {% for c in category %}}
+                    <option value="{{c.id}}" >
+                    {{c.Category}}</option>
+                    {% endfor %}
+                    </option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Price</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="price" value="{{product.Price}}">
+            </div>
+          </div>
+          <input type="submit" value="submit" name="submit">
+</form>
+{% endfor %}
+    {%endblock%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit product</title>
+</head>
+<body>
+  
+    {% for product in products %}
+    <form method="POST" action="{% url 'editProductAction' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+       
+        
+            <tr>
+                <input type="hidden" name="id" value="{{product.id}}">
+                
+               <td> Product_Name:</td>
+                <td><input type="text" name="name" value="{{product.Name}}" ></td>
+            
+            </tr>
+               <tr>
+                   <td> Image</td>
+                <td><input type="file" name="file"  ><img src="{{product.ImageFile.url}}" height="10%" width="10%"></td>
+                </tr>
+                <tr>
+            
+            
+                
+                   <td> Details:</td>
+                
+                <td><textarea name="details"  cols="30" rows="10">{{product.Details}}</textarea></td>
+                    </tr>
+            
+               <tr> 
+                   <td>Stock:</td>
+                <td><input type="text" name="stock" value="{{product.Stock}}" ></td>
+                </tr>
+            <tr>
+               <td> Category</td>
+                
+                    <td><select name="category">
+                        <option value="">--Select--</option>
+                    {% for c in category %}}
+                    <option value="{{c.id}}" >
+                    {{c.Category}}</option>
+                    {% endfor %}
+                    </select></td>
+                
+            </tr>
+            
+            <tr>
+               <td> Price:</td>
+               <td> <input type="text" name="price" value="{{product.Price}}"></td>
+            
+            </tr>
+            <tr>
+               <td> <input type="submit" value="submit" name="submit"></td>
+            </tr>
+    
+        
+      
+   </table>
+</form>
+{% endfor %}
+</body>
+</html>
